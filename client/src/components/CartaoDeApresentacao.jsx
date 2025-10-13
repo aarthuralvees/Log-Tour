@@ -1,12 +1,9 @@
-import Image from 'next/image';
-
 export function CartaoDeApresentacao({
   title,
   description,
   iconUrl,
   iconPosition = 'left',
 }) {
-  
   const flexDirectionClass =
     iconPosition === 'right' ? 'flex-row-reverse' : 'flex-row';
 
@@ -19,20 +16,15 @@ export function CartaoDeApresentacao({
       `}
     >
       <div className="relative h-32 w-32 flex-shrink-0">
-        <Image
+        <img
           src={iconUrl}
           alt={`Ilustração para ${title}`}
-          layout="fill"
-          objectFit="contain"
+          className="absolute inset-0 h-full w-full object-contain"
         />
       </div>
       <div className="text-left">
-        <h3 className="mb-2 text-lg font-bold text-sky-600">
-          {title}
-        </h3>
-        <p className="text-sm font-normal text-gray-600">
-          {description}
-        </p>
+        <h3 className="mb-2 text-lg font-bold text-sky-600">{title}</h3>
+        <p className="text-sm font-normal text-gray-600">{description}</p>
       </div>
     </div>
   );

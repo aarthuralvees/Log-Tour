@@ -1,4 +1,4 @@
-import { CartaoDeApresentacao } from '@/components/CartaoDeApresentacao';
+import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
 
 export default function PaginaDeTeste() {
   return (
