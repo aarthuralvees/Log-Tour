@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../../../../../teste-main/src/components/ui/button';
+import { Button } from '../components/Button/button';
 
 const ButtonVariant = {
   borrow: 'bg-borrow text-white',
