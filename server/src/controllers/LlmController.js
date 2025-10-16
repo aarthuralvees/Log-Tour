@@ -94,7 +94,6 @@ class LlmControler{
             }
 
             const prompt = construirPrompt(req.body)
-
             const resposta = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
                 contents: prompt,
@@ -105,7 +104,7 @@ class LlmControler{
             const text = resposta.candidates[0].content.parts[0].text
             const cleanedText = text.replace(/```json\n?|```/g, "");
             const json = JSON.parse(cleanedText);
-            res.json(json);
+            res.status(200).json(json);
 
         } catch(error) {
             res.status(500).json({ error: "Erro ao gerar roteiro", message: error.message})
