@@ -3,7 +3,7 @@ import { llmController } from '../controllers/index.js';
 
 const llmRoutes = Router();
 
-llmRoutes.get('/', llmController.createTrip);
+llmRoutes.post('/', llmController.createTrip);
 
 
 export default llmRoutes;
