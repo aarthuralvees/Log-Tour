@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from '../components/Button/button';
 
 const ButtonVariant = {
   borrow: 'bg-borrow text-white',
@@ -27,7 +26,7 @@ export const CustomButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
 
     return (
-      <Button
+      <button
         className={`${properties} font-semibold font-nunito hover:opacity-80 ${divWidth} ${className ?? ''}`}
         ref={ref}
         disabled={disabled || isLoading}
@@ -35,7 +34,7 @@ export const CustomButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading ? 'Carregando...' : label}
-      </Button>
+      </button>
     );
   }
 );
