@@ -1,9 +1,10 @@
 import React from 'react';
 
 const ButtonVariant = {
-  borrow: 'bg-borrow text-white',
-  dark: 'bg-borrowDark text-white',
-  gray: 'bg-gray text-borrowDark'
+  borrow: 'bg-blue-500 text-white',
+  dark: 'bg-gray-800 text-white',
+  gray: 'bg-gray-300 text-gray-800',
+  red: 'bg-red-700 text-white'
 } as const;
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
