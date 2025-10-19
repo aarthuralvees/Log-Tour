@@ -1,17 +1,12 @@
 import { CustomButton } from '../../components/Button/CustomButton'; 
 import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
 
   return (
    <div className='bg-background min-h-screen'>
-
-      <div className='Navbar flex justify-end pr-10 pt-3 gap-2'>
-        <CustomButton label="Login" variant="borrow" width='w-20' 
-        className='mt-2 p-2 rounded-lg shadow-md' />
-        <CustomButton label="Cadastre-se" variant="borrow" width='w-28' 
-        className='mt-2 p-2 rounded-lg shadow-md' />
-      </div>
 
       <div className="Hero flex items-center justify-center text-center px-4 gap-2">
         <div className='LogTour align-center flex flex-col items-center gap-4 mt-5'>
