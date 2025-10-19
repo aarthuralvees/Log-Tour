@@ -134,7 +134,7 @@ function Chatbot() {
         <ChatWindow messages={messages} />
         <InputBar onSendMessage={processarResposta} />
         
-        {/* Mostra dados coletados (remova em produção) */}
+        {/* Mostra dados coletados (remover em produção) */}
         <DadosColetados dados={dadosViagem} />
       </div>
       <Footer />
