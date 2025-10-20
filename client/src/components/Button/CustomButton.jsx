@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ButtonVariant = {
-  borrow: 'bg-borrow text-white',
-  dark: 'bg-borrowDark text-white',
-  gray: 'bg-gray text-borrowDark',
-  white: 'bg-white text-borrow' // usado em Home
+  borrow: 'bg-blue-500 text-white hover:bg-blue-600',
+  dark: 'bg-gray-800 text-white hover:bg-gray-900',
+  gray: 'bg-gray-300 text-gray-800 hover:bg-gray-400',
+  white: 'bg-white text-blue-500 border border-blue-500 hover:bg-blue-50'
 };
 
 export const CustomButton = React.forwardRef(function CustomButton(
