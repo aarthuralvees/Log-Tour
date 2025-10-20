@@ -1,6 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const useChat = () => {
+  const navigate = useNavigate();
+  
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -91,7 +94,7 @@ export const useChat = () => {
     dataFim: 'perfilViajante',
     perfilViajante: 'interesses',
     interesses: 'orcamento',
-    orcamento: 'completo',
+    orcamento: 'completo'
   };
 
   const adicionarMensagem = (text, type = 'bot') => {
@@ -108,18 +111,17 @@ export const useChat = () => {
 
   const processarResposta = (resposta) => {
     adicionarMensagem(resposta, 'user');
+    
     if (etapaAtual === 'orcamento') {
-      // regex verifica se tem apenas numero
       const regexContemNumero = /\d/;
 
       if (!regexContemNumero.test(resposta)) {
-        //se a validação falhar, ele vai pedir para inserir o orcamento usando numeros 
         setTimeout(() => {
           adicionarMensagem(
             'Por favor, digite o valor do orçamento usando números (ex: 500, R$ 500).',
             'bot'
           );
-        }, 500); // delay para o bot responder
+        }, 500);
         return;
       }
     }
@@ -179,14 +181,29 @@ export const useChat = () => {
     }, 1000);
   };
 
-  const gerarRoteiro = async () => {
+  const gerarRoteiro = () => {
     try {
       setTimeout(() => {
         adicionarMensagem(
-          'Roteiro gerado com sucesso! Baseado nas suas preferências, criei um roteiro incrível para você! 🌟',
+          'Roteiro gerado com sucesso! Redirecionando para a página do roteiro... 🌟',
           'bot'
         );
-        console.log('Dados finais da viagem:', dadosViagem);
+        
+        const bodyData = {
+          destino: dadosViagem.destino,
+          dataInicio: dadosViagem.dataInicio,
+          dataFim: dadosViagem.dataFim,
+          perfilViajante: dadosViagem.perfilViajante,
+          interesses: dadosViagem.interesses,
+          orcamento: dadosViagem.orcamento
+        };
+
+        console.log('Body sendo enviado:', bodyData);
+        
+        setTimeout(() => {
+          navigate("/roteiro", { state: { body: bodyData } });
+        }, 2000);
+        
       }, 2000);
       
     } catch (error) {
