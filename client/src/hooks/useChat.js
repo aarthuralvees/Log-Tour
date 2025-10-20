@@ -120,11 +120,10 @@ export const useChat = () => {
             'bot'
           );
         }, 500); // delay para o bot responder
-        
-        
-        return; 
+        return;
       }
     }
+
     if (etapaAtual === 'dataInicio') {
       if (!validarData(resposta, true)) {
         setTimeout(() => {
