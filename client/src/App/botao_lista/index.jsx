@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { CustomButton } from '../../components/Button/CustomButton.tsx';
+import { CustomButton } from '../../components/Button/CustomButton.jsx';
 import { Modal } from '../../components/Modal';
-import { FaRegWindowClose } from 'react-icons/fa';
 function BotaoLista() {
   const [Modal_aberto, setModalaberto] = useState(false);
 

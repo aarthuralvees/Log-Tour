@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CustomButton } from '../../components/Button/CustomButton.tsx';
+import { CustomButton } from '../../components/Button/CustomButton.jsx';
 
 function Home() {
   const navigate = useNavigate();
