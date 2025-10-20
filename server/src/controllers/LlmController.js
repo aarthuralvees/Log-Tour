@@ -16,7 +16,6 @@ function construirPrompt(dadosUsuario) {
     Perfil viajante ${dadosUsuario.perfilViajante}
     interesses: ${dadosUsuario.interesses}
     orcamento: ${dadosUsuario.orcamento}
-    ritmo: ${dadosUsuario.ritmo}
 
     O objeto JSON de resposta deve seguir rigorosamente a seguinte estrutura e tipos de dados, não adicione nenhum texto antes ou depois do json:
 
@@ -80,11 +79,18 @@ class LlmControler{
                 dataFim,
                 perfilViajante,
                 interesses,
-                orcamento,
-                ritmo
+                orcamento
             } = req.body;
 
-            if (!destino || !dataInicio || !dataFim || !perfilViajante || !interesses || !orcamento || !ritmo) {
+            if (!destino || !dataInicio || !dataFim || !perfilViajante || !interesses || !orcamento ) {
+
+                console.log(destino,
+                dataInicio,
+                dataFim,
+                perfilViajante,
+                interesses,
+                orcamento)
+
                 return res.status(400).json({
                     error: 'Dados insuficientes'
                 });
