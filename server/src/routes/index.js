@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import llmRoutes from './llmRoutes.js';
+import llmRoutes from './LlmRoutes.js'
 
 const router = Router();
 

@@ -1,9 +1,11 @@
 import { GoogleGenAI } from "@google/genai"
+import dotenv from 'dotenv'
+dotenv.config()
 
 function construirPrompt(dadosUsuario) {
     return `Aja como um especialista em viagens e assistente de API. Sua única função é retornar um roteiro de viagem
 
-    Utilize sua capacidade de pesquisa para encontrar links relevantes e precisos para o Google Maps e sites oficiais dos locais mencionados.
+    Utilize sua capacidade de pesquisa para encontrar links para o Google Maps dos locais mencionados.
 
     Utilize essas informações:
 
@@ -35,16 +37,13 @@ function construirPrompt(dadosUsuario) {
                 {
                 "periodo": "[string: Manhã, Tarde ou Noite]",
                 "descricao": "[string]",
-                "tipo": "[string: Ponto Turístico, Restaurante, Museu, Experiência, etc.]",
                 "local": "[string]",
-                "linkGoogleMaps": "[string URL]",
-                "linkOficial": "[string URL]"
+                "linkGoogleMaps": "[string URL]"
                 }
             ]
             }
         ],
         "climaPrevisto": {
-            "resumoGeral": "[string]",
             "temperaturaMediaCelsius": {
             "minima": "[number]",
             "maxima": "[number]"
@@ -70,9 +69,7 @@ function construirPrompt(dadosUsuario) {
     `
 }
 
-const ai = new GoogleGenAI({
-    apikey: process.env.GEMINI_API_KEY
-});
+const ai = new GoogleGenAI({});
 
 class LlmControler{
     async createTrip(req, res) {
@@ -94,7 +91,6 @@ class LlmControler{
             }
 
             const prompt = construirPrompt(req.body)
-
             const resposta = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
                 contents: prompt,
@@ -105,7 +101,7 @@ class LlmControler{
             const text = resposta.candidates[0].content.parts[0].text
             const cleanedText = text.replace(/```json\n?|```/g, "");
             const json = JSON.parse(cleanedText);
-            res.json(json);
+            res.status(200).json(json);
 
         } catch(error) {
             res.status(500).json({ error: "Erro ao gerar roteiro", message: error.message})
