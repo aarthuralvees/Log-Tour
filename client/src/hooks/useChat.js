@@ -160,10 +160,9 @@ export const useChat = () => {
       }
     }
 
-    setDadosViagem(prev => ({
-      ...prev,
-      [etapaAtual]: resposta
-    }));
+    const novosDados = { ...dadosViagem, [etapaAtual]: resposta };
+
+    setDadosViagem(novosDados)
 
     const proxima = proximaEtapa[etapaAtual];
 
@@ -173,7 +172,7 @@ export const useChat = () => {
           'Perfeito! Tenho todas as informações necessárias. Vou gerar seu roteiro personalizado! 🎯',
           'bot'
         );
-        gerarRoteiro();
+        gerarRoteiro(novosDados);
       } else {
         setEtapaAtual(proxima);
         adicionarMensagem(perguntas[proxima], 'bot');
@@ -181,7 +180,7 @@ export const useChat = () => {
     }, 1000);
   };
 
-  const gerarRoteiro = () => {
+  const gerarRoteiro = (dados) => {
     try {
       setTimeout(() => {
         adicionarMensagem(
@@ -190,19 +189,17 @@ export const useChat = () => {
         );
         
         const bodyData = {
-          destino: dadosViagem.destino,
-          dataInicio: dadosViagem.dataInicio,
-          dataFim: dadosViagem.dataFim,
-          perfilViajante: dadosViagem.perfilViajante,
-          interesses: dadosViagem.interesses,
-          orcamento: dadosViagem.orcamento
+          destino: dados.destino,
+          dataInicio: dados.dataInicio,
+          dataFim: dados.dataFim,
+          perfilViajante: dados.perfilViajante,
+          interesses: dados.interesses,
+          orcamento: dados.orcamento
         };
 
         console.log('Body sendo enviado:', bodyData);
         
-        setTimeout(() => {
-          navigate("/roteiro", { state: { body: bodyData } });
-        }, 2000);
+        navigate("/roteiro", { state: { body: bodyData } });
         
       }, 2000);
       
