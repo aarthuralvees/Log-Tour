@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors({
-    origin: "https://log-tour.onrender.com/"
+    origin: "https://log-tour.vercel.app/"
 }));
 app.use(router);
 
