@@ -1,30 +1,24 @@
 import React, { useState, useEffect } from "react";
 import ItineraryItem from "../../components/ItineraryItem/index.jsx";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://log-tour.onrender.com/",
 });
 
 export default function Roteiro() {
   const [itineraryData, setItineraryData] = useState(null);
   const [loading, setLoading] = useState(true);
-
-  const body = {
-    destino: "Roma, Italia",
-    dataInicio: "01-11-2025",
-    dataFim: "07-11-2025",
-    perfilViajante: "Aventureiro e incansável",
-    interesses: "diversão e comida",
-    orcamento: "alto",
-    ritmo: "alto",
-  };
+  
+  const location = useLocation()
+  const body = location.state?.body;
 
   useEffect(() => {
     async function fetchItinerary() {
       try {
         setLoading(true);
-        const response = await api.post("/llm/", body);
+        const response = await api.post("llm/", body);
         setItineraryData(response.data);
       } catch (error) {
         console.error(error);
