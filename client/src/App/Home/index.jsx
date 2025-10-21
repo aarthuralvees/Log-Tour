@@ -1,7 +1,6 @@
 import { CustomButton } from '../../components/Button/CustomButton'; 
 import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
 import { useNavigate } from 'react-router-dom';
-import { CustomButton } from '../../components/Button/CustomButton.jsx';
 
 function Home() {
   const navigate = useNavigate();
@@ -23,6 +22,7 @@ function Home() {
           <CustomButton label="Começar" variant="white" width='w-auto'
           className=' bg-white rounded-full px-6 py-2 border-2 border-borrow text-borrow scale-150 hover:bg-borrow shadow-md
           hover:text-white transition-all'
+          onClick = {() => navigate('/chatbot')}
           />
         </div>
 
