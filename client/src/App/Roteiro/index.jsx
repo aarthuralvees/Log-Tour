@@ -27,8 +27,8 @@ export default function Roteiro() {
       }
     }
 
-    fetchItinerary();
-  }, []);
+    if (body) fetchItinerary();
+  }, [body]);
 
   if (loading) {
     return (

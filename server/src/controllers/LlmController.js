@@ -5,8 +5,6 @@ dotenv.config()
 function construirPrompt(dadosUsuario) {
     return `Aja como um especialista em viagens e assistente de API. Sua única função é retornar um roteiro de viagem
 
-    Utilize sua capacidade de pesquisa para encontrar links para o Google Maps dos locais mencionados.
-
     Utilize essas informações:
 
     --- DADOS DA VIAGEM ---
@@ -17,7 +15,7 @@ function construirPrompt(dadosUsuario) {
     interesses: ${dadosUsuario.interesses}
     orcamento: ${dadosUsuario.orcamento}
 
-    O objeto JSON de resposta deve seguir rigorosamente a seguinte estrutura e tipos de dados, não adicione nenhum texto antes ou depois do json:
+    O objeto JSON de resposta deve seguir rigorosamente a seguinte estrutura e tipos de dados, não adicione nenhum parametro não especificado e nenhum texto antes e depois do json:
 
     {
         "informacoesGerais": {
@@ -36,34 +34,11 @@ function construirPrompt(dadosUsuario) {
                 {
                 "periodo": "[string: Manhã, Tarde ou Noite]",
                 "descricao": "[string]",
-                "local": "[string]",
-                "linkGoogleMaps": "[string URL]"
+                "local": "[string]"
                 }
             ]
             }
-        ],
-        "climaPrevisto": {
-            "temperaturaMediaCelsius": {
-            "minima": "[number]",
-            "maxima": "[number]"
-            },
-            "sugestaoVestuario": "[string]"
-        },
-        "dicasLocais": {
-            "costumes": "[array de strings]",
-            "gastronomiaRecomendada": [
-            {
-                "nome": "[string]",
-                "tipoCulinaria": "[string]",
-                "linkGoogleMaps": "[string URL]"
-            }
-            ]
-        },
-        "seguranca": {
-            "nivelGeral": "[string: Muito Alto, Alto, Médio, etc.]",
-            "aviso": "[string]",
-            "golpesComuns": "[array de strings]"
-        }
+        ]
     }
     `
 }
@@ -99,7 +74,7 @@ class LlmControler{
             const prompt = construirPrompt(req.body)
             const resposta = await ai.models.generateContent({
                 model: "gemini-2.5-flash",
-                contents: prompt,
+                contents: [{ role: "user", parts: [{ text: prompt }] }],
                 config: {
                     "response_mime_type": "application/json"
                 },

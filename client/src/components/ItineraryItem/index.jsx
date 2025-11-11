@@ -15,7 +15,7 @@ const GoogleMapsIcon = () => (
 );
 
 
-function ItineraryItem({ time, title, description, link, location }) {
+function ItineraryItem({ time, title, description, location }) {
   // Constrói a URL do Google Maps a partir da localização (chama api do maps)
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
 
@@ -30,7 +30,6 @@ function ItineraryItem({ time, title, description, link, location }) {
   // Estilos para a área dos botões/links
   const linksContainerStyles = "mt-4 pt-3 border-t border-gray-200 flex items-center gap-4"; // Adicionado 'gap' para espaçamento
   const baseLinkStyles = "text-sm font-medium transition duration-200 ease-in-out";
-  const detailsLinkStyles = `${baseLinkStyles} bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-3 rounded-lg`;
   const mapButtonStyles = `${baseLinkStyles} bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-3 rounded-lg flex items-center justify-center`;
 
   return (
@@ -46,12 +45,6 @@ function ItineraryItem({ time, title, description, link, location }) {
       
       {/* Contêiner para os links/botões */}
       <div className={linksContainerStyles}>
-        {/* Mostra o link de detalhes apenas se ele existir */}
-        {link && (
-          <a href={link} target="_blank" rel="noopener noreferrer" className={detailsLinkStyles}>
-            Ver mais detalhes
-          </a>
-        )}
 
         {/* Mostra o botão do Google Maps apenas se a localização for fornecida */}
         {location && (
