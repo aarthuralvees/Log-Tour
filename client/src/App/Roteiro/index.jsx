@@ -20,7 +20,6 @@ export default function Roteiro() {
         setLoading(true);
         const response = await api.post("llm/", body);
         setItineraryData(response.data);
-        console.log(itineraryData);
       } catch (error) {
         console.error(error);
       } finally {
@@ -28,8 +27,8 @@ export default function Roteiro() {
       }
     }
 
-    fetchItinerary();
-  }, []);
+    if (body) fetchItinerary();
+  }, [body]);
 
   if (loading) {
     return (
