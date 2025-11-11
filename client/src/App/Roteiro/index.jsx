@@ -4,7 +4,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://log-tour.onrender.com/",
 });
 
 export default function Roteiro() {
