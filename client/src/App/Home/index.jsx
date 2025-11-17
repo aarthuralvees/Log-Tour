@@ -1,6 +1,7 @@
 import { CustomButton } from '../../components/Button/CustomButton'; 
 import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
 import { useNavigate } from 'react-router-dom';
+import React from 'react';
 
 function Home() {
   const navigate = useNavigate();
