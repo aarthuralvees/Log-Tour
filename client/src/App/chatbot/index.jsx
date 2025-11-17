@@ -3,6 +3,7 @@ import robotIcon from '../../assets/turi1.png';
 import { AiOutlinePlus, AiOutlineSend } from 'react-icons/ai';
 import { useChat } from '../../hooks/useChat';
 import ChatBubble from '../../components/text_box/ChatBubble';
+import CustomButton from '../../components/Button/CustomButton';
 
 const Header = () => (
   <header className="flex items-center space-x-4 p-4 border-2 border-blue-400 rounded-xl">
@@ -44,36 +45,58 @@ const ChatWindow = ({ messages }) => {
 
 const InputBar = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
+  const inputRef = useRef(null);
 
-  const handleInputChange = (e) => setMessage(e.target.value);
+  const handleInputChange = (e) => {
+    setMessage(e.target.value);
+  };
+  
   const handleSend = () => {
-    if (message.trim()) {
-      onSendMessage(message.trim());
+    const trimmedMessage = message.trim();
+    if (trimmedMessage) {
+      onSendMessage(trimmedMessage);
       setMessage('');
+      // Mantém o foco no input após enviar
+      inputRef.current?.focus();
     }
   };
-  const handleKeyPress = (e) => e.key === 'Enter' && handleSend();
+  
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const isMessageEmpty = !message.trim();
 
   return (
     <div className="flex items-center space-x-4 p-3 border-2 border-blue-400 rounded-xl">
-      {message.trim() ? (
-        <button 
-          onClick={handleSend}
-          className="text-blue-500 hover:text-blue-700 transition-colors"
-        >
+      <CustomButton
+        variant="white"
+        width="w-12"
+        label=""
+        onAction={handleSend}
+        disabled={isMessageEmpty}
+        className="p-2"
+        aria-label={isMessageEmpty ? "Adicionar mensagem" : "Enviar mensagem"}
+      >
+        {isMessageEmpty ? (
+          <AiOutlinePlus className="text-2xl font-bold" />
+        ) : (
           <AiOutlineSend className="text-2xl font-bold" />
-        </button>
-      ) : (
-        <AiOutlinePlus className="text-blue-500 text-2xl font-bold" />
-      )}
+        )}
+      </CustomButton>
       
       <input
+        ref={inputRef}
         type="text"
         value={message}
         onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
+        onKeyDown={handleKeyDown}
         placeholder="Digite sua resposta..."
         className="w-full bg-transparent focus:outline-none text-gray-600 placeholder-gray-500"
+        aria-label="Campo de entrada de mensagem"
       />
     </div>
   );
@@ -87,7 +110,7 @@ const Footer = () => (
 
 // Main Chatbot
 function Chatbot() {
-  const { messages, dadosViagem, processarResposta } = useChat();
+  const { messages, processarResposta } = useChat();
 
   return (
     <div className="bg-gray-50 min-h-screen p-4 sm:p-8 font-sans flex flex-col">
