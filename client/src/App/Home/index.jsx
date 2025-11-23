@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { CustomButton } from '../../components/Button/CustomButton';
 import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< Updated upstream
-import React from 'react';
-=======
 import { AuthModal } from '../../components/modalCadastro';
->>>>>>> Stashed changes
 
 
 function Home() {
