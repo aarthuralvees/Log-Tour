@@ -45,24 +45,26 @@ const ChatWindow = ({ messages }) => {
 
 const InputBar = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef(null);
 
   const handleInputChange = (e) => {
     setMessage(e.target.value);
   };
   
-  const handleSend = () => {
+  const handleSend = async () => {
     const trimmedMessage = message.trim();
     if (trimmedMessage) {
-      onSendMessage(trimmedMessage);
+      setIsLoading(true);
+      await onSendMessage(trimmedMessage);
       setMessage('');
-      // Mantém o foco no input após enviar
+      setIsLoading(false);
       inputRef.current?.focus();
     }
   };
   
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -72,21 +74,21 @@ const InputBar = ({ onSendMessage }) => {
 
   return (
     <div className="flex items-center space-x-4 p-3 border-2 border-blue-400 rounded-xl">
-      <CustomButton
-        variant="white"
-        width="w-12"
-        label=""
-        onAction={handleSend}
-        disabled={isMessageEmpty}
-        className="p-2"
+      <button
+        onClick={handleSend}
+        disabled={isMessageEmpty || isLoading}
+        className="flex items-center justify-center w-12 h-12 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         aria-label={isMessageEmpty ? "Adicionar mensagem" : "Enviar mensagem"}
+        type="button"
       >
-        {isMessageEmpty ? (
-          <AiOutlinePlus className="text-2xl font-bold" />
+        {isLoading ? (
+          <div className="animate-spin">⟳</div>
+        ) : isMessageEmpty ? (
+          <AiOutlinePlus className="text-xl" />
         ) : (
-          <AiOutlineSend className="text-2xl font-bold" />
+          <AiOutlineSend className="text-xl" />
         )}
-      </CustomButton>
+      </button>
       
       <input
         ref={inputRef}
@@ -108,7 +110,6 @@ const Footer = () => (
   </footer>
 );
 
-// Main Chatbot
 function Chatbot() {
   const { messages, dadosViagem, processarResposta } = useChat();
 
