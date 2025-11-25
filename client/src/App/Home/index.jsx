@@ -1,24 +1,24 @@
-import { CustomButton } from '../../components/Button/CustomButton'
-import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
+import React, { useState } from "react";
+import { CustomButton } from '../../components/Button/CustomButton';
+import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { AuthModal } from '../../components/modalCadastro';
 
 function Home() {
-  const navigate = useNavigate()
-  const { login } = useAuth()
+  const navigate = useNavigate();
+  const { login } = useAuth();
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
-  const handleLogin = () => {
-    const mockUser = {
-      name: 'Maria Silva',
-      email: 'maria.silva@email.com',
-      avatar: 'https://ui-avatars.com/api/?name=Maria+Silva&background=2563eb&color=fff&size=128'
-    }
-    login(mockUser)
-    navigate('/home-logado')
-  }
   const handleStartWithoutLogin = () => {
-    navigate('/chatbot')
-  }
+    navigate('/chatbot');
+  };
+
+  const handleLoginSuccess = (userData) => {
+    login(userData);
+    navigate('/home-logado');
+  };
+
   return (
     <div className='bg-background min-h-screen'>
       <header className='bg-white shadow-sm border-b border-blue-100'>
@@ -35,16 +35,23 @@ function Home() {
                 variant="white" 
                 width='w-auto'
                 className='px-6 py-2 rounded-lg hidden sm:block'
-                onClick={handleLogin}
+                onClick={() => setAuthModalOpen(true)}
               />
               <CustomButton 
                 label="Cadastrar" 
                 variant="white" 
                 width='w-auto'
                 className='px-6 py-2 rounded-lg hidden sm:block'
-                onClick={handleLogin}
+                onClick={() => setAuthModalOpen(true)}
               />
-              </div>
+              <CustomButton 
+                label="Entrar sem Login" 
+                variant="borrow" 
+                width='w-auto'
+                className='px-6 py-2 rounded-lg'
+                onClick={handleStartWithoutLogin}
+              />
+            </div>
           </div>
         </div>
       </header>
@@ -72,7 +79,7 @@ function Home() {
                 variant="borrow" 
                 width='w-auto'
                 className='px-8 py-3 rounded-full text-lg font-bold shadow-lg hover:scale-105 transition-transform'
-                onClick={handleLogin}
+                onClick={() => setAuthModalOpen(true)}
               />
               
               <CustomButton 
@@ -170,14 +177,14 @@ function Home() {
                 variant="white" 
                 width='w-auto'
                 className='px-8 py-3 rounded-full text-lg font-bold shadow-md hover:scale-105 transition-transform'
-                onClick={handleLogin}
+                onClick={() => setAuthModalOpen(true)}
               />
               <CustomButton 
                 label="Conversar com Turi" 
                 variant="dark" 
                 width='w-auto'
                 className='px-8 py-3 rounded-full text-lg font-bold shadow-md hover:scale-105 transition-transform bg-white/20 hover:bg-white/30 border-2 border-white'
-                onClick={() => navigate('/chatbot')}
+                onClick={handleStartWithoutLogin}
               />
             </div>
           </div>
@@ -187,9 +194,14 @@ function Home() {
       <footer className="w-full text-center text-sm text-gray-500 py-8 border-t border-blue-100">
         © LogTour 2025
       </footer>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        setOpen={setAuthModalOpen}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </div>
-  )
+  );
 }
 
-export default Home
-
+export default Home;
