@@ -4,6 +4,7 @@ import { AiOutlinePlus, AiOutlineSend } from 'react-icons/ai';
 import { useChat } from '../../hooks/useChat';
 import ChatBubble from '../../components/text_box/ChatBubble';
 import CustomButton from '../../components/Button/CustomButton';
+import PropTypes from "prop-types";
 
 const Header = () => (
   <header className="flex items-center space-x-4 p-4 border-2 border-blue-400 rounded-xl">
@@ -42,6 +43,7 @@ const ChatWindow = ({ messages }) => {
     </main>
   );
 };
+
 
 const InputBar = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');

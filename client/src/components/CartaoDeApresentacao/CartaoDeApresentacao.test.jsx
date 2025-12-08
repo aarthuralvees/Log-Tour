@@ -1,7 +1,7 @@
 // CartaoDeApresentacao.test.js
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { CartaoDeApresentacao } from './CartaoDeApresentacao'; // Assumindo que o componente está no mesmo diretório
+import { CartaoDeApresentacao } from './index.jsx'; // Assumindo que o componente está no mesmo diretório
 
 // Dados de teste comuns
 const mockProps = {

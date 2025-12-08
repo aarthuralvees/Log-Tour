@@ -13,11 +13,13 @@
   "license": "ISC",
   "dependencies": {
     "@google/genai": "^1.24.0",
+    "@prisma/client": "^6.19.0",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
     "express": "^5.1.0"
   },
   "devDependencies": {
-    "@types/node": "^24.7.2"
+    "@types/node": "^24.7.2",
+    "dotenv": "^17.2.3",
+    "prisma": "^6.19.0"
   }
 }
