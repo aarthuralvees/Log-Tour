@@ -5,42 +5,21 @@ import { useChat } from '../../hooks/useChat';
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import ChatBubble from '../../components/text_box/ChatBubble';
-import { CustomButton } from '../../components/Button/CustomButton';
+import CustomButton from '../../components/Button/CustomButton';
+import PropTypes from "prop-types";
 
-const Header = () => {
-  const { isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-
-  return (
-    <header className="flex items-center justify-between p-6 bg-gradient-to-r from-borrow to-blue-600 rounded-2xl shadow-lg">
-      <button
-        onClick={() => navigate(isAuthenticated ? '/home-logado' : '/')}
-        className="flex items-center gap-2 text-white hover:bg-white/20 rounded-lg px-3 py-2 transition-colors"
-      >
-        <AiOutlineArrowLeft className="text-xl" />
-        <span className="hidden sm:inline font-nunito">Voltar</span>
-      </button>
-
-      <div className="flex items-center gap-4">
-        <img 
-          src={robotIcon} 
-          alt="Turi" 
-          className="w-16 h-16 rounded-full bg-white p-2 shadow-md"
-        />
-        <div className="text-white">
-          <h1 className="text-2xl md:text-3xl font-bold font-rokkitt">
-            Turi
-          </h1>
-          <p className="text-sm text-blue-100 font-nunito">
-            Seu Assistente de Viagens
-          </p>
-        </div>
-      </div>
-
-      <div className="w-20"></div>
-    </header>
-  );
-};
+const Header = () => (
+  <header className="flex items-center space-x-4 p-4 border-2 border-blue-400 rounded-xl">
+    <img 
+      src={robotIcon} 
+      alt="Turi, o assistente robô" 
+      className="w-16 h-14"
+    />
+    <h1 className="text-4xl font-extrabold text-blue-500">
+      Turi, seu Assistente IA para Viagens
+    </h1>
+  </header>
+);
 
 const ChatWindow = ({ messages }) => {
   const messagesEndRef = useRef(null);
@@ -87,6 +66,7 @@ const ChatWindow = ({ messages }) => {
     </main>
   );
 };
+
 
 const InputBar = ({ onSendMessage }) => {
   const [message, setMessage] = useState('');
