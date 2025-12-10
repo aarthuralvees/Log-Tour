@@ -2,15 +2,21 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from './App/Home';
 import HomeLogado from './App/Home_logado';
 import Chatbot from './App/chatbot';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
+import TripDetails from './App/TripDetails';
+import Roteiro from './App/Roteiro'; // <--- IMPORT THIS
+
+// Helper function to check auth status directly from storage
+const checkAuth = () => {
+  return !!localStorage.getItem('token');
+};
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth()
+  const isAuthenticated = checkAuth();
   return isAuthenticated ? children : <Navigate to="/" replace />
 }
 
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated } = useAuth()
+  const isAuthenticated = checkAuth();
   return !isAuthenticated ? children : <Navigate to="/home-logado" replace />
 }
 
@@ -25,6 +31,7 @@ function AppRoutes() {
           </PublicRoute>
         } 
       />
+      
       <Route 
         path="/home-logado" 
         element={
@@ -33,48 +40,55 @@ function AppRoutes() {
           </ProtectedRoute>
         } 
       />
+      
       <Route 
         path="/chatbot" 
         element={
             <Chatbot />
         } 
       />
+
+      {/* --- ADDED ROUTE FOR GENERATED TRIP --- */}
       <Route 
-        path="/historico" 
+        path="/roteiro" 
         element={
           <ProtectedRoute>
-            <div>Histórico de Viagens (em construção)</div>
+            <Roteiro />
           </ProtectedRoute>
         } 
       />
+      {/* -------------------------------------- */}
+      
+      {/* ROUTE FOR SAVED TRIP DETAILS */}
       <Route 
         path="/trip/:id" 
         element={
           <ProtectedRoute>
-            <div>Detalhes da Viagem (em construção)</div>
+            <TripDetails />
           </ProtectedRoute>
         } 
       />
+
       <Route 
-        path="/profile" 
+        path="/historico" 
         element={
           <ProtectedRoute>
-            <div>Perfil do Usuário (em construção)</div>
+            <div className="p-8 text-center text-xl font-rokkitt">Histórico de Viagens (em construção)</div>
           </ProtectedRoute>
         } 
       />
+      
+      {/* Profile Route REMOVED */}
     </Routes>
   )
 }
 
 function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AppRoutes />
+    </Router>
   )
 }
 
-export default App
+export default App;

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { CustomButton } from '../../components/Button/CustomButton';
 import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+// import { useAuth } from '../../contexts/AuthContext'; // REMOVED
 import { AuthModal } from '../../components/modalCadastro';
 
 function Home() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  // const { login } = useAuth(); // REMOVED
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
   const handleStartWithoutLogin = () => {
@@ -15,7 +15,14 @@ function Home() {
   };
 
   const handleLoginSuccess = (userData) => {
-    login(userData);
+    // Since we removed the context hook, we save the data manually to localStorage
+    // so the rest of the app knows we are logged in.
+    if (userData) {
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('user', JSON.stringify(userData));
+    }
+    
+    // Navigate to the logged-in area
     navigate('/home-logado');
   };
 

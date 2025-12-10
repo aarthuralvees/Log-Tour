@@ -25,11 +25,11 @@ class UserController{
         try {
             const username = req.params.username;
             const user = await prisma.user.findUnique({
-            where: { username },
-            select: { id: true, username: true, trips: true }
-        });
-        if (!user) return res.status(404).json({ message: 'user not found' });
-        res.json(user);
+                where: { username },
+                select: { id: true, username: true, trips: true }
+            });
+            if (!user) return res.status(404).json({ message: 'user not found' });
+            res.json(user);
         } catch (err) {
             console.error(err);
             res.status(500).json({ message: 'internal server error' });
