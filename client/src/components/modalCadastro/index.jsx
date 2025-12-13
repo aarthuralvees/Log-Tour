@@ -3,13 +3,11 @@ import { Modal } from "../Modal";
 import PropTypes from "prop-types";
 import CustomButton from "../Button/CustomButton";
 
-// NOTE: Change this URL to match your running backend port (usually 3000, 4000, or 8080)
-const API_BASE_URL = "http://localhost:5000"; 
+const API_BASE_URL = "https://log-tour.onrender.com/"; 
 
 export function AuthModal({ isOpen, setOpen, onLoginSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
   
-  // Backend expects 'username', not 'email'
   const [username, setUsername] = useState(""); 
   const [password, setPassword] = useState("");
   
@@ -26,7 +24,6 @@ export function AuthModal({ isOpen, setOpen, onLoginSuccess }) {
     }
   }, [isOpen]);
 
-  // Reset form when switching between Login and Signup
   useEffect(() => {
     setFade(false);
     const timeout = setTimeout(() => {
@@ -76,7 +73,7 @@ export function AuthModal({ isOpen, setOpen, onLoginSuccess }) {
       throw new Error(data.message || "Erro ao realizar login");
     }
 
-    return data; // Returns { token }
+    return data;
   };
 
   const handleSignupRequest = async () => {
@@ -92,7 +89,7 @@ export function AuthModal({ isOpen, setOpen, onLoginSuccess }) {
       throw new Error(data.message || "Erro ao criar conta");
     }
 
-    return data; // Returns created user object
+    return data;
   };
 
   const handleSubmit = async (e) => {
@@ -107,22 +104,16 @@ export function AuthModal({ isOpen, setOpen, onLoginSuccess }) {
       let authData;
 
       if (isLogin) {
-        // --- LOGIN FLOW ---
         authData = await handleLoginRequest();
       } else {
-        // --- SIGNUP FLOW ---
-        // 1. Create the user
         await handleSignupRequest();
         
-        // 2. Automatically log them in after creation
         authData = await handleLoginRequest();
       }
 
-      // Prepare user data for the frontend context
-      // We generate an avatar based on the username for UI purposes
       const userData = {
         username: username,
-        token: authData.token, // IMPORTANT: The JWT token from backend
+        token: authData.token,
         avatar: `https://ui-avatars.com/api/?name=${username}&background=2563eb&color=fff&size=128`
       };
 

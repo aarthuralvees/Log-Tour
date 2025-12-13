@@ -4,19 +4,16 @@ import { FaMapMarkedAlt, FaCalendarAlt, FaSuitcaseRolling, FaMapMarkerAlt } from
 import { useState, useEffect } from 'react'
 import { CustomButton } from '../../components/Button/CustomButton'
 
-// NOTE: Ensure this matches your backend port
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://log-tour.onrender.com/";
 
 function HomeLogado() {
   const navigate = useNavigate()
   
-  // State
   const [user, setUser] = useState(null)
   const [trips, setTrips] = useState([])
   const [loadingTrips, setLoadingTrips] = useState(true)
   const [showUserMenu, setShowUserMenu] = useState(false)
 
-  // 1. Load User Data
   useEffect(() => {
     const token = localStorage.getItem('token');
     const storedUser = localStorage.getItem('user');
@@ -38,7 +35,6 @@ function HomeLogado() {
     }
   }, [navigate]);
 
-  // 2. Fetch Trips
   useEffect(() => {
     if (!user) return;
 
@@ -61,21 +57,17 @@ function HomeLogado() {
 
         const data = await response.json();
 
-        // 3. Transform Backend Data to UI Format
         const formattedTrips = data.map(trip => {
           const info = trip.informacoesGerais || {};
           
           return {
             id: trip.id,
-            // Mapping fields from your JSON structure
             local: info.local || 'Destino desconhecido',
             pais: info.pais || '',
-            // Formatting dates "YYYY-MM-DD" to "DD/MM/YYYY" for display
             dates: (info.dataInicio && info.dataFim) 
               ? `${new Date(info.dataInicio).toLocaleDateString('pt-BR')} - ${new Date(info.dataFim).toLocaleDateString('pt-BR')}`
               : 'Data a definir',
             description: info.descricaoCurta || 'Sem descrição.',
-            // Pass the whole raw object so we can send it to the details page
             fullData: trip 
           };
         });
@@ -99,7 +91,6 @@ function HomeLogado() {
   }
 
   const handleViewDetails = (trip) => {
-    // We pass the full trip data via state so we don't have to fetch again on the next page
     navigate(`/trip/${trip.id}`, { state: { tripData: trip.fullData } });
   }
 
@@ -187,7 +178,6 @@ function HomeLogado() {
         </div>
 
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-          {/* LEFT COLUMN: TRIPS */}
           <div className='lg:col-span-2'>
             <div className='flex items-center justify-between mb-6'>
               <h3 className='font-rokkitt text-3xl font-bold text-slate-900'>
@@ -216,7 +206,6 @@ function HomeLogado() {
                  />
               </div>
             ) : (
-              // --- TRIP LIST (CLEANED UP) ---
               <div className='space-y-4'>
                 {trips.map((trip) => (
                   <div
@@ -255,7 +244,6 @@ function HomeLogado() {
             )}
           </div>
 
-          {/* RIGHT COLUMN: SIDEBAR */}
           <div className='lg:col-span-1'>
             <div className='bg-gradient-to-br from-borrow to-blue-600 rounded-2xl shadow-md p-6 sticky top-8 text-white'>
               <div className='flex items-center gap-3 mb-3'>

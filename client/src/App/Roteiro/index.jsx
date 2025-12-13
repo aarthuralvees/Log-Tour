@@ -6,30 +6,25 @@ import { CustomButton } from "../../components/Button/CustomButton";
 import { AiOutlineCheckCircle, AiOutlineHome, AiOutlineCloudUpload } from "react-icons/ai";
 
 const api = axios.create({
-  // Use 127.0.0.1 to avoid network resolution errors
-  baseURL: "http://127.0.0.1:5000",
+  baseURL: "https://log-tour.onrender.com/",
 });
 
 export default function Roteiro() {
   const [itineraryData, setItineraryData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [saveStatus, setSaveStatus] = useState(null); // null | 'saving' | 'saved' | 'error'
+  const [saveStatus, setSaveStatus] = useState(null); 
   
   const location = useLocation();
   const navigate = useNavigate();
   const body = location.state?.body;
   
-  // Ref to ensure we don't save twice
   const hasSaved = useRef(false);
-  // NEW: Ref to ensure we don't fetch AI twice (Protects against React Strict Mode)
   const hasFetchedAI = useRef(false);
 
-  // 1. Fetch from LLM (Generate Trip)
   useEffect(() => {
     async function fetchItinerary() {
       try {
         setLoading(true);
-        // FIX: Removed the trailing slash "/"
         const response = await api.post("llm", body); 
         setItineraryData(response.data);
       } catch (error) {
@@ -46,23 +41,19 @@ export default function Roteiro() {
     }
 
     if (body) {
-      // ONLY FETCH IF WE HAVEN'T YET
       if (!hasFetchedAI.current) {
           hasFetchedAI.current = true;
           fetchItinerary();
       }
     } else {
-      // If accessed directly without data, go back
       navigate('/');
     }
   }, [body, navigate]);
 
-  // 2. Auto-Save to Backend if User is Logged In
   useEffect(() => {
     const saveTripToUser = async () => {
       const token = localStorage.getItem('token');
       
-      // Only save if: we have data, we are logged in, and haven't saved yet
       if (itineraryData && token && !hasSaved.current) {
         hasSaved.current = true;
         setSaveStatus('saving');
@@ -90,7 +81,6 @@ export default function Roteiro() {
     }
   }, [itineraryData]);
 
-  // --- LOADING STATE (Prettier) ---
   if (loading) {
     return (
       <div className="fixed inset-0 flex flex-col items-center justify-center bg-white z-50">
@@ -112,7 +102,6 @@ export default function Roteiro() {
   return (
     <div className="min-h-screen bg-white flex flex-col items-center py-10 px-4">
       
-      {/* Header with Save Status */}
       <div className="w-full max-w-3xl flex justify-between items-start mb-8">
         <div>
             <h1 className="text-3xl md:text-4xl font-bold text-gray-800 font-rokkitt">
@@ -123,7 +112,6 @@ export default function Roteiro() {
             </p>
         </div>
 
-        {/* Status Badge */}
         {saveStatus === 'saved' && (
             <div className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-bold shadow-sm">
                 <AiOutlineCheckCircle className="text-lg" />
@@ -162,7 +150,6 @@ export default function Roteiro() {
         ))}
       </div>
 
-      {/* Footer Actions */}
       <div className="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 shadow-lg z-10">
          <div className="max-w-3xl mx-auto flex justify-center">
             <CustomButton 
@@ -177,7 +164,6 @@ export default function Roteiro() {
          </div>
       </div>
       
-      {/* Spacer for fixed footer */}
       <div className="h-24"></div>
     </div>
   );

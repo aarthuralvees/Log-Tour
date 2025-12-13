@@ -9,12 +9,7 @@ export default function TripDetails() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  // We try to get data passed from the HomeLogado page
   const tripData = location.state?.tripData;
-
-  // Ideally, if tripData is missing (e.g. user refreshed the page), 
-  // you would fetch it by ID using the 'id' param here.
-  // For now, we'll just check if it exists.
 
   if (!tripData) {
     return (
@@ -33,7 +28,6 @@ export default function TripDetails() {
 
   return (
     <div className="min-h-screen bg-background pb-12">
-        {/* Header / Nav */}
         <div className="bg-white border-b border-blue-100 shadow-sm sticky top-0 z-10">
             <div className="max-w-5xl mx-auto px-4 py-4 flex items-center gap-4">
                 <button 
@@ -49,7 +43,6 @@ export default function TripDetails() {
         </div>
 
       <div className="flex flex-col items-center py-10 px-4">
-        {/* General Info Card */}
         <div className="w-full max-w-3xl bg-white rounded-2xl shadow-md p-6 mb-8 border border-blue-100">
             <h2 className="text-3xl font-bold text-gray-800 mb-2 font-rokkitt">
                 {informacoesGerais.descricaoCurta}
@@ -59,7 +52,6 @@ export default function TripDetails() {
             </div>
         </div>
 
-        {/* Itinerary */}
         <div className="w-full max-w-3xl">
           {roteiroSugerido && roteiroSugerido.map((dia) => (
             <div key={dia.dia} className="mb-10 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -76,7 +68,6 @@ export default function TripDetails() {
                     title={atividade.local}
                     description={atividade.descricao}
                     location={atividade.local}
-                    // Assuming your backend/LLM provides a link, otherwise generate a search link
                     link={atividade.linkGoogleMaps || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(atividade.local + " " + informacoesGerais.local)}`}
                     />
                 ))}
