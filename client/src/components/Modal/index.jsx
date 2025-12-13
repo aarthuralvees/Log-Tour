@@ -1,7 +1,6 @@
 import React from 'react';
 
 export function Modal({ isOpen, setOpen, children }) {
-  // se o modal não estiver aberto, não renderiza nada
   if (!isOpen) {
     return null;
   }

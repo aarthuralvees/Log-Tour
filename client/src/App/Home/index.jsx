@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import { CustomButton } from '../../components/Button/CustomButton';
 import { CartaoDeApresentacao } from '../../components/CartaoDeApresentacao';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
 import { AuthModal } from '../../components/modalCadastro';
 
 function Home() {
   const navigate = useNavigate();
-  const { login } = useAuth();
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
   const handleStartWithoutLogin = () => {
@@ -15,7 +13,11 @@ function Home() {
   };
 
   const handleLoginSuccess = (userData) => {
-    login(userData);
+    if (userData) {
+      localStorage.setItem('token', userData.token);
+      localStorage.setItem('user', JSON.stringify(userData));
+    }
+    
     navigate('/home-logado');
   };
 
@@ -36,20 +38,6 @@ function Home() {
                 width='w-auto'
                 className='px-6 py-2 rounded-lg hidden sm:block'
                 onClick={() => setAuthModalOpen(true)}
-              />
-              <CustomButton 
-                label="Cadastrar" 
-                variant="white" 
-                width='w-auto'
-                className='px-6 py-2 rounded-lg hidden sm:block'
-                onClick={() => setAuthModalOpen(true)}
-              />
-              <CustomButton 
-                label="Entrar sem Login" 
-                variant="borrow" 
-                width='w-auto'
-                className='px-6 py-2 rounded-lg'
-                onClick={handleStartWithoutLogin}
               />
             </div>
           </div>
@@ -159,33 +147,6 @@ function Home() {
                   className='h-full'
                 />
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section className='py-16'>
-          <div className='bg-gradient-to-r from-borrow to-blue-600 text-white rounded-2xl p-8 md:p-12 shadow-xl text-center'>
-            <h3 className='font-rokkitt text-3xl md:text-4xl font-bold mb-4'>
-              Pronto para começar sua aventura?
-            </h3>
-            <p className='text-blue-100 font-nunito text-lg md:text-xl mb-6 max-w-2xl mx-auto'>
-              Junte-se a milhares de viajantes que já planejaram suas viagens perfeitas com o LogTour
-            </p>
-            <div className='flex flex-col sm:flex-row gap-4 justify-center'>
-              <CustomButton 
-                label="Criar Conta Grátis" 
-                variant="white" 
-                width='w-auto'
-                className='px-8 py-3 rounded-full text-lg font-bold shadow-md hover:scale-105 transition-transform'
-                onClick={() => setAuthModalOpen(true)}
-              />
-              <CustomButton 
-                label="Conversar com Turi" 
-                variant="dark" 
-                width='w-auto'
-                className='px-8 py-3 rounded-full text-lg font-bold shadow-md hover:scale-105 transition-transform bg-white/20 hover:bg-white/30 border-2 border-white'
-                onClick={handleStartWithoutLogin}
-              />
             </div>
           </div>
         </section>
