@@ -80,7 +80,8 @@ class LlmControler{
                 },
             });
             const text = resposta.candidates[0].content.parts[0].text
-            const cleanedText = text.replace(/```json\n?|```/g, "");
+            const cleanedText = text.replaceAll(/```json\n?|```/g, "");
+
             const json = JSON.parse(cleanedText);
             res.status(200).json(json);
 
