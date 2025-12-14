@@ -3,7 +3,7 @@ import { Modal } from "../Modal";
 import PropTypes from "prop-types";
 import CustomButton from "../Button/CustomButton";
 
-const API_BASE_URL = "https://log-tour..com/"; 
+const API_BASE_URL = "https://log-tour.onrender.com"; 
 
 export function AuthModal({ isOpen, setOpen, onLoginSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
