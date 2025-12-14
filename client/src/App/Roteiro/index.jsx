@@ -6,7 +6,7 @@ import { CustomButton } from "../../components/Button/CustomButton";
 import { AiOutlineCheckCircle, AiOutlineHome, AiOutlineCloudUpload } from "react-icons/ai";
 
 const api = axios.create({
-  baseURL: "https://log-tour.onrender.com/",
+  baseURL: "https://log-tour.onrender.com",
 });
 
 export default function Roteiro() {
