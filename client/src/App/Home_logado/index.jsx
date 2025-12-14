@@ -4,7 +4,7 @@ import { FaMapMarkedAlt, FaCalendarAlt, FaSuitcaseRolling, FaMapMarkerAlt } from
 import { useState, useEffect } from 'react'
 import { CustomButton } from '../../components/Button/CustomButton'
 
-const API_BASE_URL = "https://log-tour.onrender.com/";
+const API_BASE_URL = "https://log-tour.onrender.com";
 
 function HomeLogado() {
   const navigate = useNavigate()
