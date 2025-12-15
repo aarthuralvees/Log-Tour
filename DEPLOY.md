@@ -4,6 +4,8 @@ link: https://log-tour.vercel.app/
 
 Este projeto foi dividido em **client (frontend)** e **server (backend)**, cada um com seu deploy separado.
 
+As instruções para buildar e contribuir para o projeto estão no arquivo **CONTRIBUTING.MD**.
+
 ⚠️⚠️ Como foi utilizado o free tier do serviço de deploy do backend, quando o site não é utilizado por um tempo ele fica "dormente" e a primeira requisição demora aproximadamente um minuto para ser respondida.
 
 ---
